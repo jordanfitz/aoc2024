@@ -2,6 +2,7 @@ package util
 
 import (
 	"fmt"
+	"math"
 	"os"
 	"slices"
 	"strconv"
@@ -62,16 +63,16 @@ func ForLines(fileName string, processor func(line string)) {
 	}
 }
 
+func ForLinesBytes(fileName string, processor func(line []byte)) {
+	for _, line := range ReadLines(fileName) {
+		processor([]byte(line))
+	}
+}
+
 func ForBytes(str string, processor func(c byte)) {
 	bytes := []byte(str)
 	for i := range bytes {
 		processor(bytes[i])
-	}
-}
-
-func ForLinesBytes(fileName string, processor func(line []byte)) {
-	for _, line := range ReadLines(fileName) {
-		processor([]byte(line))
 	}
 }
 
@@ -97,4 +98,8 @@ func Assert(condition bool) {
 	if !condition {
 		panic("assertion failure")
 	}
+}
+
+func IntAbs(val int) int {
+	return int(math.Abs(float64(val)))
 }
