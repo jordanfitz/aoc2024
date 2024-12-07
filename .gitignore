@@ -1,4 +1,2 @@
-*.sh
 *.txt
 !input.txt
-cmd/template
