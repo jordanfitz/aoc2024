@@ -50,7 +50,7 @@ func ReadFile(fileName string) string {
 	if err != nil {
 		panic("file read failed: " + err.Error())
 	}
-	return string(content)
+	return strings.TrimSpace(string(content))
 }
 
 func ReadLines(fileName string) []string {
