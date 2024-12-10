@@ -45,7 +45,7 @@ func RegisterDay(dayParts Parts) {
 	}
 }
 
-func ExecuteDay(name, part string) {
+func ExecuteDayPart(name, part string) {
 	if groups := nameInputRegex.FindStringSubmatch(name); groups == nil {
 		panic(fmt.Sprintf("day '%s' is invalid (bad format)", name))
 	} else {

@@ -15,5 +15,5 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Usage: main.go <day> <part>\n")
 		os.Exit(1)
 	}
-	runner.ExecuteDay(args[0], args[1])
+	runner.ExecuteDayPart(args[0], args[1])
 }
