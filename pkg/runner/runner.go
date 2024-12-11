@@ -2,6 +2,7 @@ package runner
 
 import (
 	"fmt"
+	"path"
 	"reflect"
 	"regexp"
 	"strings"
@@ -16,7 +17,7 @@ type Parts interface {
 
 type registeredDay struct {
 	parts     Parts
-	inputPath string
+	directory string
 }
 
 var (
@@ -41,11 +42,11 @@ func RegisterDay(dayParts Parts) {
 	}
 	registeredDays[name] = registeredDay{
 		parts:     dayParts,
-		inputPath: strings.Join(path[len(path)-2:], "/") + "/input.txt",
+		directory: strings.Join(path[len(path)-2:], "/"),
 	}
 }
 
-func ExecuteDayPart(name, part string) {
+func ExecuteDayPart(name, part, inputName string) {
 	if groups := nameInputRegex.FindStringSubmatch(name); groups == nil {
 		panic(fmt.Sprintf("day '%s' is invalid (bad format)", name))
 	} else {
@@ -63,13 +64,14 @@ func ExecuteDayPart(name, part string) {
 	}
 
 	fmt.Printf("Executing %s.%s\n\n", name, part)
+	inputPath := path.Join(day.directory, inputName)
 
 	var result any
 	switch part {
 	case "part1":
-		result = day.parts.Part1(day.inputPath)
+		result = day.parts.Part1(inputPath)
 	case "part2":
-		result = day.parts.Part2(day.inputPath)
+		result = day.parts.Part2(inputPath)
 	default:
 		panic(fmt.Sprintf("invalid part specifier '%s'", part))
 	}
